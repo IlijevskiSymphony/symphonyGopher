@@ -34,7 +34,7 @@ func (s *Service) Send(mail Mail) error {
 	post := &http.Client{}
 	resp, err := post.Do(req)
 	if err != nil {
-		return errors.Wrap(err, "Cannot post to /jobs")
+		return errors.Wrap(err, "Cannot post to client")
 	}
 	if resp.StatusCode != http.StatusOK {
 		return errors.New(fmt.Sprintf("Invalid mandrill response: %+v", resp))

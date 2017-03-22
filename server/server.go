@@ -25,8 +25,28 @@ func Router(conf configuration.Configuration, sessionFn func() *mgo.Session, sto
 	})
 
 	router.
+		Methods("POST").
+		PathPrefix("/register").
+		Handler(handlers.HandlerRegisterPost{Configuration: conf, SessionFn: sessionFn})
+
+	router.
 		PathPrefix("/signup/accept/").
 		Handler(handlers.HandlerRegisterVerificationGet{Configuration: conf, SessionFn: sessionFn, Store: store})
+
+	router.
+		Methods("POST").
+		Path("/verification/resend").
+		Handler(handlers.HandlerRegisterVerificationResendPost{Configuration: conf, SessionFn: sessionFn})
+
+	router.
+		Methods("POST").
+		Path("/resetPassword").
+		Handler(handlers.HandlerResetPasswordPost{Configuration: conf, SessionFn: sessionFn, Store: store})
+
+	router.
+		Methods("POST").
+		Path("/resetPasswordEmail").
+		Handler(handlers.HandlerResetPasswordEmailPost{Configuration: conf, SessionFn: sessionFn})
 
 	router.
 		PathPrefix("/resetPasswordCheck/").
@@ -38,44 +58,19 @@ func Router(conf configuration.Configuration, sessionFn func() *mgo.Session, sto
 		Handler(handlers.HandlerLoginGet{Configuration: conf, SessionFn: sessionFn, Store: store})
 
 	router.
+		Methods("POST").
+		Path("/login").
+		Handler(handlers.HandlerLoginPost{Configuration: conf, SessionFn: sessionFn, Store: store})
+
+	router.
 		Methods("GET").
 		Path("/logout").
 		Handler(handlers.HandlerLogoutGet{Configuration: conf, SessionFn: sessionFn, Store: store})
 
 	router.
 		Methods("POST").
-		Path("/login").
-		Handler(handlers.HandlerLoginPost{Configuration: conf, SessionFn: sessionFn, Store: store})
-
-	router.
-		Methods("POST").
-		Path("/verification/resend").
-		Handler(handlers.HandlerRegisterVerificationResendPost{Configuration: conf, SessionFn: sessionFn})
-
-	router.
-		Methods("POST").
-		PathPrefix("/register").
-		Handler(handlers.HandlerRegisterPost{Configuration: conf, SessionFn: sessionFn})
-
-	router.
-		Methods("POST").
-		Path("/settings").
-		Handler(handlers.HandlerSettingsPost{Configuration: conf, SessionFn: sessionFn, Store: store})
-
-	router.
-		Methods("POST").
-		Path("/resetPasswordEmail").
-		Handler(handlers.HandlerResetPasswordEmailPost{Configuration: conf, SessionFn: sessionFn})
-
-	router.
-		Methods("POST").
-		Path("/resetPassword").
-		Handler(handlers.HandlerResetPasswordPost{Configuration: conf, SessionFn: sessionFn, Store: store})
-
-	router.
-		Methods("POST").
-		Path("/addApplication").
-		Handler(handlers.HandlerApplicationAddPost{Configuration: conf, SessionFn: sessionFn, Store: store})
+		Path("/addLink").
+		Handler(handlers.HandlerLinkAddPost{Configuration: conf, SessionFn: sessionFn, Store: store})
 
 	return router
 }

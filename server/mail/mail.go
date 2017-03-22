@@ -33,18 +33,18 @@ var PasswordResetTemplate = struct {
 	Sender  sender
 	Message string
 }{
-	Subject: "Reset your Basiq password",
+	Subject: "Reset your password",
 	Sender: sender{
-		Name:  "Basiq",
-		Email: "support@basiq.io",
+		Name:  "Symphony",
+		Email: "support@symphony.is",
 	},
 	Message: `
-		<p>Hi %s!<br/><br/>
-		You have requested a password reset for your Basiq account. Follow the link below to set a new password:<br/><br/>
-		<a href="https://dashboard.basiq.io/reset/%s">https://dashboard.basiq.io/reset/%s</a><br/><br/>
+		<p>Hello!<br/><br/>
+		You have requested a password reset for your account. Follow the link below to set a new password:<br/><br/>
+		<a href="https://symphonyGopher.symphony.is/reset/%s">https://symphonyGopher.symphony.is/reset/%s</a><br/><br/>
 		If you don't wish to reset your password, disregard this email and no action will be taken.<br/><br/>
 		Yours,<br/><br/>
-		The Basiq Team`,
+		The Symphony Team`,
 }
 
 var Template = struct {
@@ -52,21 +52,15 @@ var Template = struct {
 	Sender  sender
 	Message string
 }{
-	Subject: "Confirm yout Basiq email address",
+	Subject: "Confirm yout Symphony email address",
 	Sender: sender{
-		Name:  "Basiq",
-		Email: "support@basiq.io",
+		Name:  "Symphony",
+		Email: "support@Symphony.is",
 	},
 	Message: `
-	<p>Welcome to Basiq!<br/><br/>
-	Before you can start integrating with our APIs, you need to confirm your email address. To get started, just confirm your email address by clicking the link below:<br/><br/>
-	<a href="https://dashboard.basiq.io/signup/accept/%s">https://dashboard.basiq.io/signup/accept/%s</a><br/><br/>
-	Once you're ready to start integrating, we recommended taking a look at our docs:<br/><br/>
-	<a href="http://basiq.io/api/">http://basiq.io/api/</a><br/><br/>
-	You can view your setup, API request logs, and a variety of other information about your account right from dashboard:<br/><br/>
-	<a href="https://dashboard.basiq.io">https://dashboard.basiq.io</a><br/><br/>
-	We'll be here to help you with every step along the way. You can find answers to most questions and get in touch with us at <a href="https://support.basiq.io">https://support.basiq.io</a><br/><br/>
-	Hope you enjoy getting up and running. We're excited to see what comes next!<br/><br/>
+	<p>Welcome to SymphonyGopher!<br/><br/>
+	Before you can start, you need to confirm your email address. To get started, just confirm your email address by clicking the link below:<br/><br/>
+	<a href="https://symphonyGopher.symphony.is/signup/accept/%s">https://symphonyGopher.symphony.is/signup/accept/%s</a><br/><br/>
 	Yours,<br/><br/>
-	The Basiq Team`,
+	The Symphony Team`,
 }

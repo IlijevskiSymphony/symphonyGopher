@@ -2,17 +2,14 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
-	"io"
 	"net/http"
 
 	"gopkg.in/mgo.v2"
 
-	"github.com/Sirupsen/logrus"
 	"github.com/IlijevskiSymphony/symphonyGopher/server/configuration"
-	"github.com/IlijevskiSymphony/symphonyGopher/server/mail"
 	"github.com/IlijevskiSymphony/symphonyGopher/server/partners"
 	"github.com/IlijevskiSymphony/symphonyGopher/server/registrations"
+	"github.com/Sirupsen/logrus"
 	"github.com/pborman/uuid"
 )
 
@@ -29,6 +26,7 @@ type HandlerRegisterPost struct {
 func (h HandlerRegisterPost) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	decoder := json.NewDecoder(req.Body)
 	var posted RegistrationPost
+
 	if err := decoder.Decode(&posted); err != nil {
 		logrus.Infof("Cannot decode registration. Error: %s", err)
 		w.WriteHeader(http.StatusBadRequest)
@@ -88,25 +86,27 @@ func (h HandlerRegisterPost) ServeHTTP(w http.ResponseWriter, req *http.Request)
 		return
 	}
 
-	ms := mail.Service{Host: h.Configuration.MandrillHost}
-	m := mail.Mail{
-		Key: h.Configuration.MandrillApiKey,
-		Message: mail.Message{
-			Html:      fmt.Sprintf(mail.Template.Message, r.Reference, r.Reference),
-			Text:      "",
-			Subject:   mail.Template.Subject,
-			FromEmail: mail.Template.Sender.Email,
-			FromName:  mail.Template.Sender.Name,
-			To:        mail.Receivers{mail.Receiver{Email: p.Email, Name: "", Type: "to"}},
-		},
-		Async: false,
-	}
-
-	if err := ms.Send(m); err != nil {
-		logrus.Infof("Cannot send registration mail. Error: %s", err)
-		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
+	//Registration email sent here
+	//
+	// ms := mail.Service{Host: h.Configuration.MandrillHost}
+	// m := mail.Mail{
+	// 	Key: h.Configuration.MandrillApiKey,
+	// 	Message: mail.Message{
+	// 		Html:      fmt.Sprintf(mail.Template.Message, r.Reference, r.Reference),
+	// 		Text:      "",
+	// 		Subject:   mail.Template.Subject,
+	// 		FromEmail: mail.Template.Sender.Email,
+	// 		FromName:  mail.Template.Sender.Name,
+	// 		To:        mail.Receivers{mail.Receiver{Email: p.Email, Name: "", Type: "to"}},
+	// 	},
+	// 	Async: false,
+	// }
+	//
+	// if err := ms.Send(m); err != nil {
+	// 	logrus.Infof("Cannot send registration mail. Error: %s", err)
+	// 	w.WriteHeader(http.StatusInternalServerError)
+	// 	return
+	// }
 
 	r.Status = registrations.StatusVerificationSent
 	if err := registrationsRepo.Update(r); err != nil {
@@ -116,5 +116,4 @@ func (h HandlerRegisterPost) ServeHTTP(w http.ResponseWriter, req *http.Request)
 	}
 
 	w.WriteHeader(http.StatusOK)
-	io.WriteString(w, "Please check your inbox!")
 }

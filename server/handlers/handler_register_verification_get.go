@@ -7,10 +7,10 @@ import (
 
 	"gopkg.in/mgo.v2"
 
-	"github.com/Sirupsen/logrus"
 	"github.com/IlijevskiSymphony/symphonyGopher/server/configuration"
 	"github.com/IlijevskiSymphony/symphonyGopher/server/partners"
 	"github.com/IlijevskiSymphony/symphonyGopher/server/registrations"
+	"github.com/Sirupsen/logrus"
 	"github.com/gorilla/sessions"
 	"github.com/pborman/uuid"
 )
@@ -58,14 +58,14 @@ func (h HandlerRegisterVerificationGet) ServeHTTP(w http.ResponseWriter, req *ht
 	}
 
 	if p.Status == partners.StatusVerified {
-		http.Redirect(w, req, "/dashboard", http.StatusFound)
+		w.WriteHeader(http.StatusBadRequest)
 		io.WriteString(w, id)
 		return
 	}
 
 	if r.Status != registrations.StatusVerificationSent {
 		logrus.Infof("Registration verification link is not valid.")
-		http.Redirect(w, req, "/verification-invalid", http.StatusFound)
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
@@ -85,6 +85,6 @@ func (h HandlerRegisterVerificationGet) ServeHTTP(w http.ResponseWriter, req *ht
 	session.Values["id"] = p.ID
 	session.Save(req, w)
 
-	http.Redirect(w, req, "/dashboard/settings", http.StatusFound)
+	w.WriteHeader(http.StatusOK)
 	io.WriteString(w, id)
 }

@@ -6,8 +6,8 @@ import (
 
 	"gopkg.in/mgo.v2"
 
-	"github.com/IlijevskiSymphony/symphonyGopher/server/applications"
 	"github.com/IlijevskiSymphony/symphonyGopher/server/configuration"
+	"github.com/IlijevskiSymphony/symphonyGopher/server/links"
 	"github.com/IlijevskiSymphony/symphonyGopher/server/partners"
 
 	"github.com/Sirupsen/logrus"
@@ -15,31 +15,22 @@ import (
 	"github.com/pborman/uuid"
 )
 
-type ApplicationPost struct {
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	Type        string `json:"type"`
+type LinkPost struct {
+	Link string   `json:"link"`
+	Tags []string `json:"tags"`
 }
 
-type HandlerApplicationAddPost struct {
+type HandlerLinkAddPost struct {
 	Configuration configuration.Configuration
 	SessionFn     func() *mgo.Session
 	Store         *sessions.CookieStore
 }
 
-func (h HandlerApplicationAddPost) ServeHTTP(w http.ResponseWriter, req *http.Request) {
+func (h HandlerLinkAddPost) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	decoder := json.NewDecoder(req.Body)
-	var posted ApplicationPost
+	var posted LinkPost
 	if err := decoder.Decode(&posted); err != nil {
 		logrus.Infof("Cannot decode add application data. Error: %s", err)
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
-
-	apptype, ok := applications.ApplicationType(posted.Type)
-
-	if !ok {
-		logrus.Infof("Cannot decode application type.")
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -75,15 +66,15 @@ func (h HandlerApplicationAddPost) ServeHTTP(w http.ResponseWriter, req *http.Re
 		return
 	}
 
-	app := applications.New(uuid.New(), posted.Name, posted.Description, apptype, partner.ID)
+	link := links.New(uuid.New(), uuid.New(), posted.Link, posted.Tags)
 
-	applicationsRepo := applications.NewRepository(h.SessionFn())
-	defer applicationsRepo.Close()
+	linksRepo := links.NewRepository(h.SessionFn())
+	defer linksRepo.Close()
 
-	err = applicationsRepo.Update(app)
+	err = linksRepo.Update(link)
 
 	if err != nil {
-		logrus.Infof("Cannot update application. Error: %s", err)
+		logrus.Infof("Cannot update link. Error: %s", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
