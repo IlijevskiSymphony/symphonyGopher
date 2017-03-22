@@ -1,3 +1,0 @@
-
-govendor sync
-go install
