@@ -31,6 +31,6 @@ _testmain.go
 *.prof
 
 vendor/*/
+!vendor.json
 
 bindata_assetfs.go
-

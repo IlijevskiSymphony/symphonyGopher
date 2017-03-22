@@ -8,9 +8,9 @@ import (
 	"gopkg.in/mgo.v2"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/basiqio/developer-dashboard/server/configuration"
-	"github.com/basiqio/developer-dashboard/server/partners"
-	"github.com/basiqio/developer-dashboard/server/registrations"
+	"github.com/IlijevskiSymphony/symphonyGopher/server/configuration"
+	"github.com/IlijevskiSymphony/symphonyGopher/server/partners"
+	"github.com/IlijevskiSymphony/symphonyGopher/server/registrations"
 	"github.com/gorilla/sessions"
 	"github.com/pborman/uuid"
 )

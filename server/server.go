@@ -8,10 +8,9 @@ import (
 	"gopkg.in/mgo.v2"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/basiqio/connect-logging/logging"
-	"github.com/basiqio/developer-dashboard/server/configuration"
-	"github.com/basiqio/developer-dashboard/server/handlers"
-	"github.com/basiqio/developer-dashboard/server/persistance"
+	"github.com/IlijevskiSymphony/symphonyGopher/server/configuration"
+	"github.com/IlijevskiSymphony/symphonyGopher/server/handlers"
+	"github.com/IlijevskiSymphony/symphonyGopher/server/persistance"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
 )
@@ -107,18 +106,6 @@ func Start() {
 		logrus.Infof("%s\n", print)
 	} else {
 		logrus.Error("Cannot print environment variables.")
-	}
-
-	loggingConf := logging.ElasticLoggingConf{
-		ElasticSearchURL: conf.ElasticSearchURL,
-		Source:           "basiq-developer-dashboard",
-		LogFields:        []logging.LogField{},
-	}
-
-	if hook, err := logging.NewElasticHook(loggingConf); err == nil {
-		logrus.AddHook(hook)
-	} else {
-		logrus.Fatalf("Cannot create logrus elastic search hook. Error: %s.", err)
 	}
 
 	dashboardDS, err := persistance.NewDataStore(conf.DeveloperDashboardDB)

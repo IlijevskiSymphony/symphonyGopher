@@ -5,9 +5,9 @@ import (
 	"net/http"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/basiqio/developer-dashboard/server/configuration"
-	"github.com/basiqio/developer-dashboard/server/partners"
-	"github.com/basiqio/developer-dashboard/server/passwordreset"
+	"github.com/IlijevskiSymphony/symphonyGopher/server/configuration"
+	"github.com/IlijevskiSymphony/symphonyGopher/server/partners"
+	"github.com/IlijevskiSymphony/symphonyGopher/server/passwordreset"
 	"github.com/gorilla/sessions"
 	"gopkg.in/mgo.v2"
 )

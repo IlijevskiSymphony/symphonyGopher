@@ -6,9 +6,9 @@ import (
 
 	"gopkg.in/mgo.v2"
 
-	"github.com/basiqio/developer-dashboard/server/applications"
-	"github.com/basiqio/developer-dashboard/server/configuration"
-	"github.com/basiqio/developer-dashboard/server/partners"
+	"github.com/IlijevskiSymphony/symphonyGopher/server/applications"
+	"github.com/IlijevskiSymphony/symphonyGopher/server/configuration"
+	"github.com/IlijevskiSymphony/symphonyGopher/server/partners"
 
 	"github.com/Sirupsen/logrus"
 	"github.com/gorilla/sessions"

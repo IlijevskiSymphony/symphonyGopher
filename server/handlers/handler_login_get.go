@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/basiqio/developer-dashboard/server/configuration"
+	"github.com/IlijevskiSymphony/symphonyGopher/server/configuration"
 	"github.com/gorilla/sessions"
 	"gopkg.in/mgo.v2"
 )
