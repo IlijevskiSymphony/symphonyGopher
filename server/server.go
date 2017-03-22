@@ -2,15 +2,16 @@ package server
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 
 	"gopkg.in/mgo.v2"
 
-	"github.com/Sirupsen/logrus"
 	"github.com/IlijevskiSymphony/symphonyGopher/server/configuration"
 	"github.com/IlijevskiSymphony/symphonyGopher/server/handlers"
 	"github.com/IlijevskiSymphony/symphonyGopher/server/persistance"
+	"github.com/Sirupsen/logrus"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
 )
@@ -19,9 +20,9 @@ import (
 func Router(conf configuration.Configuration, sessionFn func() *mgo.Session, store *sessions.CookieStore) *mux.Router {
 	router := mux.NewRouter()
 
-	router.
-		PathPrefix("/static/").
-		Handler(http.StripPrefix("/static/", http.FileServer(http.Dir(conf.StaticContentDir))))
+	router.Path("/").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, "Hello and welcome!")
+	})
 
 	router.
 		PathPrefix("/signup/accept/").
@@ -76,10 +77,6 @@ func Router(conf configuration.Configuration, sessionFn func() *mgo.Session, sto
 		Path("/addApplication").
 		Handler(handlers.HandlerApplicationAddPost{Configuration: conf, SessionFn: sessionFn, Store: store})
 
-	router.PathPrefix("/").Methods("GET").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, conf.StaticContentDir+"/index.html")
-	})
-
 	return router
 }
 
@@ -108,7 +105,7 @@ func Start() {
 		logrus.Error("Cannot print environment variables.")
 	}
 
-	dashboardDS, err := persistance.NewDataStore(conf.DeveloperDashboardDB)
+	dashboardDS, err := persistance.NewDataStore(conf.SymphonyGopherDB)
 	if err != nil {
 		logrus.Fatalf("Cannot create developer dashboard data store. Error: %s.", err)
 	}
@@ -116,5 +113,5 @@ func Start() {
 
 	var sessionFn = func() *mgo.Session { return dashboardDS.Session() }
 
-	logrus.Fatal(http.ListenAndServe(":"+conf.Port, Router(*conf, sessionFn, store)))
+	logrus.Fatal(http.ListenAndServe(":"+conf.SymphonyGopherPort, Router(*conf, sessionFn, store)))
 }
