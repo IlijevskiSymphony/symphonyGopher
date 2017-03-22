@@ -38,7 +38,7 @@ Server endpoints and their purpose:
 - '/register' (POST)
   Used for registration of new user, expects next form data parameters in JSON format.
   {
-  	"email":"ilijevski93@gmail.com",
+  	"email":"random123@gmail.com",
   	"password": "Ilijevski1234"
   }
 
@@ -51,7 +51,7 @@ Server endpoints and their purpose:
 - '/login' (POST)
   Used to login to server and create new session, expects next form data parameters in JSON format.
   {
-  	"email":"ilijevski93@gmail.com",
+  	"email":"random123@gmail.com",
   	"password": "Ilijevski1234"
   }
 
@@ -71,13 +71,13 @@ Server endpoints and their purpose:
 - '/verification/resend' (POST)
   Resends verification email for registrated credentials, expects next form data parameters in JSON format.
   {
-    "email":"ilijevski93@gmail.com"
+    "email":"random123@gmail.com"
   }
 
 - '/resetPasswordEmail' (POST)
   Sends an email with reference to user to reset password, expects next form data parameters in JSON format.
   {
-    "email":"ilijevski93@gmail.com"
+    "email":"random123@gmail.com"
   }
 
 - '/resetPasswordCheck/{reference}' (GET)
