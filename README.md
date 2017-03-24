@@ -33,7 +33,7 @@ Dependencies are kept into vendor/ folder, aren't version controlled. Folders un
 - Run application server with `./symphonyGopher`
 
 
-### Examples of use ###
+## Examples of use ##
 Server endpoints and their purpose:
 - '/register' (POST)
   Used for registration of new user, expects next form data parameters in JSON format.
