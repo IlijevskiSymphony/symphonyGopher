@@ -10,11 +10,11 @@ You should create database with any name and create one user with read/write per
 Application configuration is stored in environment variables.
 
 Example script to configure environment (added to $HOME/.bash_profile):
--Go variables
+- Go variables
 `export GOPATH="/Users/stefanilijevski/go"`
 `export GOBIN="/Users/stefanilijevski/go/bin"`
 
--SympohonyGopher variables
+- SympohonyGopher variables
 `export SG_DB="mongodb://user:password@localhost:27017/symphonyGopher"`
 `export SG_PORT=8082`
 

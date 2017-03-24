@@ -13,6 +13,7 @@ import (
 	"github.com/IlijevskiSymphony/symphonyGopher/server/persistance"
 	"github.com/Sirupsen/logrus"
 	"github.com/gorilla/mux"
+	"github.com/gorilla/securecookie"
 	"github.com/gorilla/sessions"
 )
 
@@ -77,8 +78,7 @@ func Router(conf configuration.Configuration, sessionFn func() *mgo.Session, sto
 
 //Start function starts the web server
 func Start() {
-	// var store = sessions.NewCookieStore([]byte(securecookie.GenerateRandomKey(64)))
-	var store = sessions.NewCookieStore([]byte("something-very-secret-xx"))
+	var store = sessions.NewCookieStore([]byte(securecookie.GenerateRandomKey(64)))
 
 	store.Options = &sessions.Options{
 		Domain:   "localhost",
