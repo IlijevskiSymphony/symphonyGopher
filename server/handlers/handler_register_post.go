@@ -65,9 +65,9 @@ func (h HandlerRegisterPost) ServeHTTP(w http.ResponseWriter, req *http.Request)
 	}
 
 	if p != nil {
-		p = partners.New(p.ID, posted.Email, posted.Password, h.Configuration.HashSalt)
+		p = partners.New(p.ID, posted.Email, posted.Password, uuid.New())
 	} else {
-		p = partners.New(uuid.New(), posted.Email, posted.Password, h.Configuration.HashSalt)
+		p = partners.New(uuid.New(), posted.Email, posted.Password, uuid.New())
 	}
 
 	err = partnersRepo.Update(p)

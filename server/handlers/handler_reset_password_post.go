@@ -4,11 +4,12 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/Sirupsen/logrus"
 	"github.com/IlijevskiSymphony/symphonyGopher/server/configuration"
 	"github.com/IlijevskiSymphony/symphonyGopher/server/partners"
 	"github.com/IlijevskiSymphony/symphonyGopher/server/passwordreset"
+	"github.com/Sirupsen/logrus"
 	"github.com/gorilla/sessions"
+	"github.com/pborman/uuid"
 	"gopkg.in/mgo.v2"
 )
 
@@ -69,7 +70,9 @@ func (h HandlerResetPasswordPost) ServeHTTP(w http.ResponseWriter, req *http.Req
 		return
 	}
 
-	p.PasswordHash = partners.Hash(posted.Password + h.Configuration.HashSalt)
+	newSalt := uuid.New()
+	p.Salt = newSalt
+	p.PasswordHash = partners.Hash(posted.Password + newSalt)
 
 	err = partnersRepo.Update(p)
 

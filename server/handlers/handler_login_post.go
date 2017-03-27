@@ -6,9 +6,9 @@ import (
 
 	"gopkg.in/mgo.v2"
 
-	"github.com/Sirupsen/logrus"
 	"github.com/IlijevskiSymphony/symphonyGopher/server/configuration"
 	"github.com/IlijevskiSymphony/symphonyGopher/server/partners"
+	"github.com/Sirupsen/logrus"
 	"github.com/gorilla/sessions"
 )
 
@@ -65,7 +65,7 @@ func (h HandlerLoginPost) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	passwordHash := partners.Hash(posted.Password + h.Configuration.HashSalt)
+	passwordHash := partners.Hash(posted.Password + p.Salt)
 	if p.PasswordHash == passwordHash {
 		if p != nil && p.Status == partners.StatusNotVerified {
 			response := LoginResponse{p.Email, partners.StatusNotVerified}

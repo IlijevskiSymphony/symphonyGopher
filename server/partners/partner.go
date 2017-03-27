@@ -29,6 +29,7 @@ type Partner struct {
 	Email        string
 	PasswordHash string
 	Status       Status
+	Salt         string
 }
 
 func New(id string, email string, password string, salt string) *Partner {
@@ -37,6 +38,7 @@ func New(id string, email string, password string, salt string) *Partner {
 		Email:        email,
 		PasswordHash: Hash(password + salt),
 		Status:       StatusNotVerified,
+		Salt:         salt,
 	}
 }
 
